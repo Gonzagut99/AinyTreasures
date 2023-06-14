@@ -1,0 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+final Widget backIcon = SvgPicture.asset('assets/icons/BackButton.svg');
+final Widget cartIcon = SvgPicture.asset('assets/icons/CartButton.svg');
+final Widget homeIcon = SvgPicture.asset('assets/icons/Home.svg');
+final Widget likeIcon = SvgPicture.asset('assets/icons/LikeButton.svg');
+final Widget experiencesIcon = SvgPicture.asset('assets/icons/LocationTick.svg');
+final Widget menuDrawerIcon = SvgPicture.asset('assets/icons/MenuDrawer.svg');
+final Widget schoolIcon = SvgPicture.asset('assets/icons/School.svg');
+final Widget searchIcon = SvgPicture.asset('assets/icons/SearchNormal.svg');
+final Widget shopIcon = SvgPicture.asset('assets/icons/Shop.svg');
+final Widget slideIndicatorIcon = SvgPicture.asset('assets/icons/SlideIndicator.svg');
+final Widget userButtonIcon = SvgPicture.asset('assets/icons/UserButton.svg');
+final Widget exploringCountryImg = SvgPicture.asset('assets/images/exploringCountry.svg');
+final Widget readingBookImg = SvgPicture.asset('assets/images/readingBook.svg');
