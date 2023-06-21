@@ -11,17 +11,11 @@ import 'package:sqflite/sqflite.dart';
 
 // Creamos la capa Controlador
 class UserController {
-  //List<User>? _usersList;
-
-  //UserController() {
-    // Inicializamos la lista de libros desde la capa Modelo
-    
-  //}
   // Método para obtener la lista de libros
   //List<User> get UserList => _UserList;
-  Future<User> login({required String email, required String password}) async{
+  Future<dynamic> login({required String email, required String password}) async{
     //Variables informacion del backend
-    late Future<User> futureUser;
+    late Future<dynamic> futureUser;
     futureUser = UserModel().getUserByEmail(email,password);
     //UserModel().insertUser(await futureUser);
     return futureUser;

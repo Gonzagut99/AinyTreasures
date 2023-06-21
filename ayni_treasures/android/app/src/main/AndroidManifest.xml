@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ayni_treasures">
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="Jabbi"
         android:name="${applicationName}"

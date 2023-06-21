@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     //Establecer usuario actual
     Future<void> setCurrentUser() async {
-      final Future<User> userFound = UserController().login(email: emailValue, password: passwordValue);
+      final Future<dynamic> userFound = UserController().login(email: emailValue, password: passwordValue);
       User user = await userFound;
       setState(() {
         appData.currentUserId = user.userid;
@@ -55,26 +55,44 @@ class _LoginPageState extends State<LoginPage> {
       if(formKey.currentState!.validate()){
         //Valores del login son guardados en sus variables vinculadas
         formKey.currentState!.save();
+        UserController().login(email: emailValue, password: passwordValue).then((dynamic user){
+          if (user is User) {
+            setCurrentUser();
+            //Se accede a las variables para llamar a la base de datos
+            showDialog(context: context, builder: (BuildContext context){
+              return CustomFutureBuilder<dynamic>(
+                future: ()=>UserController().login(email: emailValue, password: passwordValue),
+                builder: (context, user) {
+                  //Se guarda la id del usuario de manera              
+                  return CustomComponents.makeSimpleDialog(context: context, title: 'Bienvenido ${user?.username} ${user?.lastname}!',content: 'Has iniciado sesión exitosamente. Espere un momento.');
+                },
+                loadingWidget: const CircularProgressIndicator(),
+              ); 
+            }, barrierDismissible: false);
+            //Se envia a la pagina de inicio despues de 3 segundos
+            Timer(const Duration(seconds: 5),()=>{
+              Navigator.of(context).pushNamed(route)
+            });
+            // Timer(const Duration(seconds: 5),()=>{
+            //   userFound.then((value) => Navigator.of(context).pushNamed(route,arguments:value) )
+            // });
+          } else {
+            showDialog(context: context, builder: (BuildContext context){
+              return CustomFutureBuilder<dynamic>(
+                future: ()=>UserController().login(email: emailValue, password: passwordValue),
+                builder: (context, message) {
+                  //Se guarda la id del usuario de manera              
+                  return CustomComponents.makeSimpleDialog(context: context, title: '¡Lo sentimos!',content: 'Mensaje: $message. Vuelva a intentar llenar el formulario.');
+                },
+                loadingWidget: const CircularProgressIndicator(),
+              ); 
+            });
+          }
+
+        });
+
         
-        setCurrentUser();
-        //Se accede a las variables para llamar a la base de datos
-        showDialog(context: context, builder: (BuildContext context){
-          return CustomFutureBuilder<User>(
-            future: ()=>UserController().login(email: emailValue, password: passwordValue),
-            builder: (context, user) {
-              //Se guarda la id del usuario de manera              
-              return CustomComponents.makeSimpleDialog(context: context, title: 'Bienvenido ${user?.username} ${user?.lastname}!',content: 'Has iniciado sesión exitosamente');
-            },
-            loadingWidget: const CircularProgressIndicator(),
-          ); 
-        });
-        //Se envia a la pagina de inicio despues de 5 segundos
-        Timer(const Duration(seconds: 5),()=>{
-          Navigator.of(context).pushNamed(route)
-        });
-        // Timer(const Duration(seconds: 5),()=>{
-        //   userFound.then((value) => Navigator.of(context).pushNamed(route,arguments:value) )
-        // });
+        
       }
     }
     return Scaffold(

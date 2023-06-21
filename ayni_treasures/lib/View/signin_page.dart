@@ -40,10 +40,10 @@ class _SignInPageState extends State<SignInPage> {
     }
     //Establecer usuario actual
     Future<void> setCurrentUser() async {
-      final Future<User> userFound = UserController().login(email: emailValue, password: passwordValue);
+      final Future<dynamic> userFound = UserController().login(email: emailValue, password: passwordValue);
       User user = await userFound;
       setState(() {
-        appData.currentUserId = user.userid;
+          appData.currentUserId = user.userid;
       });
     }
     //Registra y Construye el dialogo de inicio de sesión exitoso
@@ -51,29 +51,34 @@ class _SignInPageState extends State<SignInPage> {
       if(formKey.currentState!.validate()){
         formKey.currentState!.save();
         //Se establece el usuario actual
-        setCurrentUser();
+        //setCurrentUser();
 
         showDialog(context: context, builder: (BuildContext context){
           return CustomFutureBuilder<Map<String,dynamic>>(
             future: ()=>UserController().register(username: nameValue, lastname: lastNameValue, password: passwordValue, email: emailValue, age: ageValue, region: regionValue, province: provinceValue, district: districtValue),
             builder: (context, newuser) {
               final simpleDialog = CustomComponents.makeSimpleDialog(context: context, title: '${newuser?['message']}!',content: 'Gracias por confiar en nosotros');
-              if (newuser?['status']==200) {
-                Future<User> userFound = UserController().login(email: emailValue, password: passwordValue);
-                userFound.then((value) {
-                  Timer(const Duration(seconds: 5),()=>{
-                    userFound.then((value) => Navigator.of(context).pushNamed(route))
+              if (newuser?['message']=='Registro Exitoso') {
+                //Future<User> userFound = UserController().login(email: emailValue, password: passwordValue);
+                setCurrentUser().then((value) {
+                  Timer(const Duration(seconds: 3),()=>{
+                    Navigator.of(context).pushNamed(route)
                   });
                   return simpleDialog;
 
                 });
                 
-              }             
+              }else{
+                Timer(const Duration(seconds: 5),()=>{
+                    Navigator.of(context).pushNamed('/signin')
+                  });
+                return simpleDialog;
+              }            
               return simpleDialog;
             },
             loadingWidget: const CircularProgressIndicator(),
           );
-        }); 
+        }, barrierDismissible: false); 
       }
     }
     return Scaffold(
@@ -90,7 +95,7 @@ class _SignInPageState extends State<SignInPage> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [CustomComponents.makeText(headingType: 'H3', data: 'Ayni Treasures', color: customSecondary)],
+                          children: [CustomComponents.makeText(headingType: 'H3', data: 'Jabbi', color: customSecondary)],
                         ),
                         const SizedBox(height: 24,),
                         Row(

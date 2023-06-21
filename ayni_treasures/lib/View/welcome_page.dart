@@ -59,13 +59,31 @@ class _WelcomePageState extends State<WelcomePage> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [CustomComponents.makeText(headingType: 'H3', data: 'Jabbi', color: customSecondary)],
+                        children: [
+                          Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              //color: customTernary,
+                              image: const DecorationImage(image: AssetImage('assets/icons/logo_jabi.png'), fit: BoxFit.cover),   
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          CustomComponents.makeText(headingType: 'H3', data: 'Jabbi', color: customSecondary)
+                          
+                          ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                          Column(
                            children: [
+                             SizedBox(
+                               width: 200,
+                               child: CustomComponents.makeText(headingType: 'H2', data: 'Bienvenido', color: customPrimary,textAlign: TextAlign.center),
+                             ),
+                            const SizedBox(height: 20),
                              SvgPicture.asset('assets/images/exploringCountry.svg'),
                              const SizedBox(height: 20),
                              SizedBox(
@@ -78,16 +96,16 @@ class _WelcomePageState extends State<WelcomePage> {
                                child: CustomComponents.makeText(headingType: 'P3', data: 'Ofrecemos una experiencia intuitiva, informativa y personalizada para poder vivir de la manera más saludable.', color: customBlack, textAlign: TextAlign.center),
                              ),
                             const SizedBox(height: 20),
-                             SizedBox(
-                               width: 80,
-                               child: CustomFutureBuilder<User>(
-                                  future: ()=>UserController().login(email: 'gonzaloa_treasures@gmail.com', password: '1234567'),
-                                  builder: (context, user) {
-                                    return CustomComponents.makeText(headingType: 'P3', data: 'Usuario: ${user?.username}', color: customBlack, textAlign: TextAlign.center);
-                                  },
-                                  loadingWidget: const CircularProgressIndicator(),
-                                ),
-                             ) 
+                            //  SizedBox(
+                            //    width: 80,
+                            //    child: CustomFutureBuilder<User>(
+                            //       future: ()=>UserController().login(email: 'gonzaloa_treasures@gmail.com', password: '1234567'),
+                            //       builder: (context, user) {
+                            //         return CustomComponents.makeText(headingType: 'P3', data: 'Usuario: ${user?.username}', color: customBlack, textAlign: TextAlign.center);
+                            //       },
+                            //       loadingWidget: const CircularProgressIndicator(),
+                            //     ),
+                            //  ) 
                            ],
                          )
                          

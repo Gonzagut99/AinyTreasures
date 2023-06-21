@@ -170,7 +170,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           SliverGrid(
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, // Número de columnas en el grid
-                              crossAxisSpacing: 12, // Espacio horizontal entre los elementos
+                              crossAxisSpacing: 8, // Espacio horizontal entre los elementos
                               mainAxisSpacing: 8, // Espacio vertical entre los elementos
                             ),
                             delegate: SliverChildBuilderDelegate(

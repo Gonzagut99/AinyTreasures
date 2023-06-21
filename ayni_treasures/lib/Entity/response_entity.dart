@@ -11,7 +11,7 @@ String responseEntityToJson(ResponseEntity data) => json.encode(data.toJson());
 class ResponseEntity {
     final dynamic entity;
     final String message;
-    final int status;
+    final dynamic status;
 
     ResponseEntity({
         required this.entity,

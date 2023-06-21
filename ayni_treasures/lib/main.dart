@@ -1,3 +1,5 @@
+
+import 'package:ayni_treasures/View/app_welcome.dart';
 import 'package:ayni_treasures/View/category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ayni_treasures/View/press_page.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       //initialRoute: "/",
       //home: const HomePage(),
-      home: const WelcomePage(),
+      home: const AppWelcome(),
       routes: {
         //"/":(BuildContext context) => const WelcomePage(),
         "/login":(BuildContext context) => const LoginPage(),

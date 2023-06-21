@@ -31,19 +31,27 @@ class UserModel {
   //   }
   // }
 
-  Future<User> getUserByEmail(String email, String password) async {
+  Future<dynamic> getUserByEmail(String email, String password) async {
     //User? user;
     //final client = http.Client();
     var url = Uri.https(_baseURI,'login/$email',{'password':password});
     final response = await http.get(url);
     if (response.statusCode == 200) {
+      
       final responseEntity = responseEntityFromJson(response.body);
-      final responseUser = userFromJson(jsonEncode(responseEntity.entity)) ;
-      return responseUser;
+      if (responseEntity.status==1) {
+        final responseUser = userFromJson(jsonEncode(responseEntity.entity)) ;
+        return responseUser;
+      } else {
+        return responseEntity.message;
+      }
+      
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Fallo en la carga de información');
+      final responseEntity = responseEntityFromJson(response.body);
+      return responseEntity;
+      //throw Exception('Fallo en la carga de información');
     }
   }
   Future<User> getUserById(String id) async {
@@ -82,10 +90,18 @@ class UserModel {
       headers:  {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
-      return {
-        'status':response.statusCode,
-        'message':'Registro Exitoso'
-      };
+      final responseBody = responseEntityFromJson(response.body);
+      if (responseBody.status==1) {
+        return {
+          'status':response.statusCode,
+          'message':'Registro Exitoso'
+        };
+      } else {
+        return {
+          'status':response.statusCode,
+          'message':'Registro Fallido: ${responseBody.message}. Intentelo nuevamente.'
+        };
+      }
     } else {
       return {
         'status':response.statusCode,

@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 12),
               const Divider(),
               CustomComponents.categoryTitle(subtitle: 'Novedades'),
-CustomFutureBuilder<List<Product>>(
+                CustomFutureBuilder<List<Product>>(
                 future: ()=>getListProducts(uriArgument: "Tubérculos"),
                 builder: (context, listProducts) {
                   return SizedBox(
