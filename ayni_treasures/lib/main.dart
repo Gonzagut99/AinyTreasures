@@ -1,30 +1,43 @@
 
 import 'package:ayni_treasures/View/app_welcome.dart';
 import 'package:ayni_treasures/View/category_page.dart';
+import 'package:ayni_treasures/View/firebase_api.dart';
+import 'package:ayni_treasures/View/profile_page.dart';
+//firebase
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+//Screens
 import 'package:ayni_treasures/View/press_page.dart';
 import 'package:ayni_treasures/View/login_page.dart';
 import 'package:ayni_treasures/View/store_page.dart';
 import 'package:ayni_treasures/View/welcome_page.dart';
 import 'package:ayni_treasures/View/signin_page.dart';
+import 'View/checkout_page.dart';
+import 'View/productdetail_page.dart';
+import 'View/shoppingcart_page.dart';
 import 'View/styles.dart';
 import 'View/home_page.dart';
 
-void main() {
+void main() async{
+  //firebasecore para push notifications
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseApi().initNotifications();
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ayni Treasures',
       theme: ThemeData(
         primarySwatch: primarySwatch,
-        fontFamily: 'Poppins'
+        fontFamily: 'Poppins',
+        dividerColor: customDarkGray
       ),
       //initialRoute: "/",
       //home: const HomePage(),
@@ -37,6 +50,10 @@ class MyApp extends StatelessWidget {
         "/store":(BuildContext context) => const StorePage(),
         "/press":(BuildContext context) => const PressPage(),
         "/category":(BuildContext context) => const CategoryPage(),
+        "/profile":(BuildContext context) => const ProfilePage(),
+        "/productDetail":(BuildContext context) => const ProductDetailPage(),
+        "/cart":(BuildContext context) => const ShoppingCartPage(),
+        "/checkout":(BuildContext context) => const CheckoutPage(),
         //"/school":(BuildContext context) => ,
       },
     );

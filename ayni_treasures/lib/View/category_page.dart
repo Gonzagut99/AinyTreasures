@@ -27,6 +27,21 @@ class _CategoryPageState extends State<CategoryPage> {
   // Future<void> getCurrentUser() async {
   //   currentUser = UserModel().getUserByIdSqlLite(userid: appData.currentUserId);
   // }
+  final List<String> subCategories= ['Tubérculos','Hortalizas','Frutas','Frutos secos','Cereales','Menestras' ];
+  String currentSubcategory = 'Frutas';
+  Key keyGridBuilder = const Key('1667199254000');
+
+  @override
+  void initState() {
+    super.initState();
+    //getCurrentUser();
+  }
+
+  // @override
+  // void setState(VoidCallback fn) {
+  //   super.setState(fn);
+  //   // Do something after the state has been updated
+  // }
 
   Future<List<Product>> getListProducts({required uriArgument}) async {
     Future<List<Product>> listProducts = ProductController().getProductsBySubcategory(subcategory: uriArgument);
@@ -37,11 +52,15 @@ class _CategoryPageState extends State<CategoryPage> {
     return list[index];
   }
 
-
-  @override
-  void initState() {
-    super.initState();
-    //getCurrentUser();
+  void onButtonPressed(int index) {
+    for (var i = 0; i < subCategories.length; i++) {
+      if (i==index) {
+        setState(() {
+          currentSubcategory=subCategories[i];
+          keyGridBuilder = Key('my_key_${DateTime.now().millisecondsSinceEpoch}');
+        });
+      }
+    }
   }
 
   @override
@@ -50,21 +69,7 @@ class _CategoryPageState extends State<CategoryPage> {
     //final argsUser = ModalRoute.of(context)?.settings.arguments as User;
     final argumentsCategory = ModalRoute.of(context)?.settings.arguments as String;
     late String imageCategory;
-    final List<String> subCategories= ['Tubérculos','Hortalizas','Frutas','Frutos secos','Cereales','Menestras' ];
-    List<bool> buttonStates = [false, false, false,false, false, false];
-    String currentSubcategory = 'Frutas';
-    void onButtonPressed(int index) {
-      setState(() {
-        for (int i = 0; i < buttonStates.length; i++) {
-          buttonStates[i] = (i == index); // Establece el estado del botón seleccionado como true y los demás como false
-        }
-      });
-      if (buttonStates[index]==true) {
-        setState(() {
-        currentSubcategory=subCategories[index];
-      });
-      }
-    }
+
 
     void setCategory (argumentsCategory){
       switch (argumentsCategory) {
@@ -96,7 +101,9 @@ class _CategoryPageState extends State<CategoryPage> {
             height: 120,
             width: double.infinity,
             decoration: BoxDecoration(
+              color: customBlack,
               image: DecorationImage(
+                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
                 image: NetworkImage(imageCategory),
                 fit: BoxFit.cover
               ),
@@ -134,7 +141,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         child: Container(
                           margin: margin,
                           child: ElevatedButton(
-                            onPressed: ()=>{onButtonPressed(int.parse(index.toString())),},
+                            onPressed: ()=>{onButtonPressed(index)},
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(14),
@@ -162,6 +169,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 const Divider(),
                 CustomComponents.categoryTitle(subtitle: currentSubcategory),
                 CustomFutureBuilder<List<Product>>(
+                  key: keyGridBuilder,
                   future: ()=>getListProducts(uriArgument: currentSubcategory),
                   builder: (context, listProducts) {
                     return Expanded(
@@ -176,7 +184,20 @@ class _CategoryPageState extends State<CategoryPage> {
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 final item = listProducts?[index];
-                                return CustomComponents.makeGeneralCard(imageUrl: item!.mainimage, subtitle: item.fullname, price: 'S/. ${((double.parse(item.price))*10).toStringAsFixed(1)}', height: 180);
+                                return CustomComponents.makeGeneralCard(
+                                  imageUrl: item!.mainimage, 
+                                  subtitle: item.fullname, 
+                                  price: 'S/. ${((double.parse(item.price))*10).toStringAsFixed(1)}', 
+                                  height: 180, 
+                                  callback: (){
+                                    //Carga nueva pagina de detalle de producto
+                                    //appData.productselectedid=item.idproduct;
+                                    return (){
+                                      appData.productselectedid=item.idproduct;
+                                      CustomComponents.callbackNavSimple(context: context, route: '/productDetail',arguments: item.subcategory);
+                                    };
+                                  }
+                                  );
                               },
                               childCount: listProducts?.length,
                             ),
@@ -184,19 +205,8 @@ class _CategoryPageState extends State<CategoryPage> {
                         ],
                       ),
                     );
-                    // return SizedBox(
-                    //   height: 200,
-                    //   child: ListView.builder(
-                    //     //shrinkWrap: true,
-                    //     scrollDirection: Axis.horizontal,
-                    //     itemCount: listProducts!.length,
-                    //     itemBuilder: (BuildContext context, int index){
-                    //       return CustomComponents.makeGeneralCard(imageUrl: listProducts[index].mainimage, subtitle: listProducts[index].fullname, price: 'S/. ${((double.parse(listProducts[index].price))*10).toStringAsFixed(1)}', height: 180);                       
-                    //     }                    
-                    //   ),
-                    // );
                   },
-                  loadingWidget: const CircularProgressIndicator(),
+                  loadingWidget: const CircularProgressIndicator(color: customPrimary,strokeWidth: 4,),
                 ),
                     
                 ],

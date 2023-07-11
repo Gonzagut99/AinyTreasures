@@ -8,12 +8,16 @@ class CustomFutureBuilder<T> extends StatelessWidget {
   final AsyncDataFetcher<T> future;
   final AsyncWidgetBuilder<T> builder;
   final Widget? loadingWidget;
+  final double? loadingWidgetWidth;
+  final double? loadingWidgetHeight;
 
   const CustomFutureBuilder({
     super.key, 
     required this.future,
     required this.builder,
     this.loadingWidget,
+    this.loadingWidgetWidth,
+    this.loadingWidgetHeight,
   });
 
   @override
@@ -26,7 +30,14 @@ class CustomFutureBuilder<T> extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return loadingWidget ?? const CircularProgressIndicator();
+          return Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: loadingWidgetWidth ?? 100,
+              height: loadingWidgetHeight ?? 100,
+              child: loadingWidget ?? const CircularProgressIndicator(),
+            ),
+          );
         }
       },
     );

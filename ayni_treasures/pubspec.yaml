@@ -30,8 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -40,6 +38,17 @@ dependencies:
   nanoid: ^1.0.0
   sqflite: ^2.2.8+4
   splashscreen: ^1.3.5
+  firebase_core:
+  firebase_messaging: ^14.6.3
+  flutter_local_notifications:
+  image_picker:
+  firebase_storage: 
+  #Expersiones regulares y formateo para los inputs
+  mask_text_input_formatter:
+  #Encriptación de la información
+  encrypt:
+
+
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +99,16 @@ flutter:
     - assets/images/studyingBook.svg
     - assets/images/shoppingOnline.svg
     - assets/icons/logo_jabi.png
+    - assets/images/genericuser_asset.jpg
+    - assets/icons/CardPayment.svg
+    - assets/icons/DeliveryBox.svg
+    - assets/icons/ReviewCheckout.svg
+    - assets/icons/CardPaymentActive.svg
+    - assets/icons/DeliveryBoxActive.svg
+    - assets/icons/ReviewCheckoutActive.svg
+    - assets/icons/QuickDelivery.svg
+    - assets/icons/StandardDelivery.svg
+
   #   - images/a_dot_ham.jpeg
 
   

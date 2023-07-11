@@ -12,6 +12,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      elevation: 15.0,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/Home.svg'),

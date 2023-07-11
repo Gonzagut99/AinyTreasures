@@ -91,16 +91,6 @@ class _HomePageState extends State<HomePage> {
                     },
                     loadingWidget: const CircularProgressIndicator(),
                   ),
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [                      
-                  //     SizedBox(
-                  //       width: 190,
-                  //       child: CustomComponents.makeText(headingType: 'H4', data: 'Hola, ${currentUser.username}! (${currentUser.district})', color: customPrimary),
-                  //     ),
-                  //     CustomComponents.makeText(headingType: 'P2', data: """Aprende una nueva \npalabra aquí.""", color: customPrimary)
-                  //   ],
-                  // ),
                   SvgPicture.asset('assets/images/studyingBook.svg')
                 ],
               ),
@@ -117,14 +107,18 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: listProducts!.length,
                       itemBuilder: (BuildContext context, int index){
-                        return CustomComponents.makeGeneralCard(imageUrl: listProducts[index].mainimage, subtitle: listProducts[index].fullname, price: 'S/. ${((double.parse(listProducts[index].price))*10).toStringAsFixed(1)}', height: 180);
-                        // return CustomFutureBuilder<Product>(
-                        //   future: ()=>bringOneProduct(index, listProducts),
-                        //   builder: (context, user) {
-                        //     return CustomComponents.makeText(headingType: 'P3', data: 'Usuario: ${user?.username}', color: customBlack, textAlign: TextAlign.center);
-                        //   },
-                        //   loadingWidget: const CircularProgressIndicator(),
-                        //  );                          
+                        return CustomComponents.makeGeneralCard(
+                          imageUrl: listProducts[index].mainimage, 
+                          subtitle: listProducts[index].fullname, 
+                          price: 'S/. ${((double.parse(listProducts[index].price))*10).toStringAsFixed(1)}',
+                          height: 180,
+                          callback: (){
+                            return (){
+                              appData.productselectedid=listProducts[index].idproduct;
+                              CustomComponents.callbackNavSimple(context: context, route: '/productDetail',arguments: listProducts[index].subcategory);
+                            };
+                          }
+                           );                         
                       }                    
                     ),
                   );
@@ -144,7 +138,17 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: listProducts!.length,
                       itemBuilder: (BuildContext context, int index){
-                        return CustomComponents.makeGeneralCard(imageUrl: listProducts[index].mainimage, subtitle: listProducts[index].fullname, price: 'S/. ${((double.parse(listProducts[index].price))*10).toStringAsFixed(1)}', height: 180);                       
+                        return CustomComponents.makeGeneralCard(
+                          imageUrl: listProducts[index].mainimage, 
+                          subtitle: listProducts[index].fullname, 
+                          price: 'S/. ${((double.parse(listProducts[index].price))*10).toStringAsFixed(1)}', 
+                          height: 180,
+                          callback: (){
+                            return (){
+                              appData.productselectedid=listProducts[index].idproduct;
+                              CustomComponents.callbackNavSimple(context: context, route: '/productDetail',arguments: listProducts[index].subcategory);
+                            };
+                          });                       
                       }                    
                     ),
                   );

@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
         constraints: const BoxConstraints.expand(),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage("https://viajes.nationalgeographic.com.es/medio/2018/02/27/ibr-2218482__550x807.jpg"),
+            image: NetworkImage("https://storage.googleapis.com/imagenes-appcertus/pantallas/imagen_bienvenida.jpg"),
             fit: BoxFit.cover
           ),
         ),
@@ -148,10 +148,11 @@ class _LoginPageState extends State<LoginPage> {
                                     FormItems.makeInputItem(
                                       label: 'Contraseña',
                                       inputType: TextInputType.visiblePassword,
-                                      cbOnSaved:(String value){passwordValue=value;}, 
+                                      //Se guardan los datos encriptados
+                                      cbOnSaved:(String value){passwordValue=UserController().encryptInfo(data: value);}, 
                                       cbValidator: (String value){
                                         if (value.length<6||value.length>10||value.isEmpty){
-                                          return 'No ha ingresado ningun valor o la contraseña no puede exceder 6 digitos';
+                                          return 'Minimo 6 dígitos';
                                         }
                                       } 
                                     ),

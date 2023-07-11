@@ -29,7 +29,8 @@ class ProductModel {
       throw Exception('Fallo en la carga de información');
     }
   }
-  Future<Product> getUserById(String id) async {
+  
+  Future<Product> getProductById(String id) async {
     //User? user;
     //final client = http.Client();
     var url = Uri.https(_baseURI,'product/$id');

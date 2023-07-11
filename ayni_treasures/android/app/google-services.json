@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "999898045804",
+    "project_id": "jabbi-c988f",
+    "storage_bucket": "jabbi-c988f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999898045804:android:754c1172ba3f8dd839a749",
+        "android_client_info": {
+          "package_name": "com.example.ayni_treasures"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999898045804-mj9n5ra4sovm2pptfp0qar95iaj158tg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMyWKVxKLRjG0dqtWPjTkYf4lpBe-DShE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999898045804-mj9n5ra4sovm2pptfp0qar95iaj158tg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -8,6 +8,8 @@ import '../Model/user_model.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
+import '../View/components/singleton_envVar.dart';
 
 // Creamos la capa Controlador
 class UserController {
@@ -21,10 +23,22 @@ class UserController {
     return futureUser;
   }
 
-  Future<Map<String,dynamic>> register({required String username,required String lastname, required String password, required String email, required int age, required String region, required String province, required String district  
+  Future<Map<String,dynamic>> register({required String username,required String lastname, required String password, required String email, required int age, required String region, required String province, required String district,required String profileimage 
   }) async{
     var userid = nanoid(10);
-    final newUser = UserModel().postNewUser(userid: userid, username: username, lastname: lastname, password: password, email: email, age: age, region: region, province: province, district: district);
+    final newUser = UserModel().postNewUser(userid: userid, username: username, lastname: lastname, password: password, email: email, age: age, region: region, province: province, district: district, profileimage: profileimage);
     return newUser;
+  }
+
+  
+  String encryptInfo({required String data}){
+    final dataForEncryption = data;
+    final key = encrypt.Key.fromUtf8(appData.encryptKkey);
+    final iv = encrypt.IV.fromLength(16);
+
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    final encrypted = encrypter.encrypt(dataForEncryption, iv: iv);
+    return encrypted.base64;
   }
 }

@@ -45,4 +45,8 @@ class ProductController {
     final newProduct = ProductModel().postNewProduct(idproduct:idproduct,fullname:fullname, price: price, description:description,category:category, subcategory: subcategory, stock: stock, mainimage: mainimage, addimage1: addimage1, addimage2:addimage2 , origin:origin , carbs:carbs , proteins:proteins , kcal:kcal , fats:fats , etimology:etimology , infosource:infosource , linksource:linksource , onsale:onsale , newarrival:newarrival , descount:descount);
     return newProduct;
   }
+
+  Future<Product> getProductById(String id) async{
+    return ProductModel().getProductById(id);
+  }
 }

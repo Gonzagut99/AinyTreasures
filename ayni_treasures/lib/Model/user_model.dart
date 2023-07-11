@@ -70,7 +70,7 @@ class UserModel {
     }
   }
 
-  Future<Map<String,dynamic>> postNewUser({required String userid,required String username,required String lastname, required String password, required String email, required int age, required String region, required String province, required String district}) async {
+  Future<Map<String,dynamic>> postNewUser({required String userid,required String username,required String lastname, required String password, required String email, required int age, required String region, required String province, required String district, required String profileimage}) async {
     //User? user;
     //final client = http.Client();
     var url = Uri.https(_baseURI,'/newuser');
@@ -83,7 +83,8 @@ class UserModel {
       'age':age,
       'region':region,
       'province':province,
-      'district':district
+      'district':district,
+      'profileimage': profileimage
     };
     final response = await http.post(url,
       body: jsonEncode(requestBody),
@@ -111,11 +112,13 @@ class UserModel {
   }
 
   static Future<void> makeDbSqlLite() async {
+    //final dbPath = join(await getDatabasesPath(), 'user.db');
+    //await deleteDatabase(dbPath);
     database = openDatabase(
       join(await getDatabasesPath(), 'user.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE user(userid TEXT PRIMARY KEY, username TEXT, lastname TEXT, email TEXT, age INTEGER, region TEXT, province TEXT, district TEXT)",
+          "CREATE TABLE user(userid TEXT PRIMARY KEY, username TEXT, lastname TEXT, email TEXT, age INTEGER, region TEXT, province TEXT, district TEXT, profileimage TEXT)",
         );
       },
       version: 1,
@@ -177,7 +180,8 @@ class UserModel {
           age: oneUser['age'],
           region: oneUser['region'],
           province: oneUser['province'],
-          district: oneUser['district']
+          district: oneUser['district'],
+          profileimage: oneUser['profileimage']
       );
     } else {
       final newUser = await getUserById(userid!);
