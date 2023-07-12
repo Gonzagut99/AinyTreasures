@@ -4,7 +4,7 @@ import '../Model/paymentinfo_model.dart';
 import '../Entity/paymentinfo_entity.dart';
 import 'package:nanoid/nanoid.dart';
 
-class PaymentInfoCcontroller {
+class PaymentInfoController {
   Future<List<PaymentInfoEntity>> getPaymentInfoByUserId({required String userId}) async{
     //Variables informacion del backend
     late Future<List<PaymentInfoEntity>> futurePaymentInfo;

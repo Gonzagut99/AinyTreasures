@@ -26,18 +26,6 @@ class MathCalculations {
   }
 
   //cuando hay más de dos decimales
-  // double _roundUpAboveThreeDecimals(double value) {
-  //   double roundedValue;
-  //   double thirdDecimal = double.parse(value.toStringAsFixed(3).split('.').last);
-  //   if (thirdDecimal >= 5) {
-  //     roundedValue = (value * 100).ceil() / 100;  // Round up
-  //   } else {
-  //     roundedValue = (value * 100).floor() / 100;  // Round down
-  //   }
-  //   return roundedValue;
-  // }
-
-  //cuando hay más de dos decimales
   double _roundUpAboveThreeDecimals(double value) {
     double roundedValue;
     String decimalPart = value.toStringAsFixed(3).split('.').last;

@@ -28,7 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
   //   currentUser = UserModel().getUserByIdSqlLite(userid: appData.currentUserId);
   // }
   final List<String> subCategories= ['Tubérculos','Hortalizas','Frutas','Frutos secos','Cereales','Menestras' ];
-  String currentSubcategory = 'Frutas';
+  String currentSubcategory = 'Tubérculos';
   Key keyGridBuilder = const Key('1667199254000');
 
   @override

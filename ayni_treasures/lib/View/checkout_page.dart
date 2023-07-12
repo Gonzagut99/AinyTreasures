@@ -38,19 +38,39 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  //Key reconsreuctor de la barra de iconos
+  Key keyGridBuilder = const Key('1667199254001');
+
   //Proceso de checkout estados
   bool isActiveDelivInfo = true;
   bool isActiveCardInfo = false;
   bool isActiveReview = false;
 
   final String idUser = appData.currentUserId!;
-
+  
+  //Estados de
   int currentScreenIndex = 0;
 
   //Cambia la pantalla en la que se encuentra
   void changeScreen(int index) {
     setState(() {
+      //cambia de pantalla
       currentScreenIndex = index;
+      //Actualiza iconos activos
+      if (index==0) {
+        isActiveDelivInfo = true;
+        isActiveCardInfo = false;
+        isActiveReview = false;
+      } else if(index==1){
+        isActiveDelivInfo = true;
+        isActiveCardInfo = true;
+        isActiveReview = false;
+      }else{
+        isActiveDelivInfo = true;
+        isActiveCardInfo = true;
+        isActiveReview = true;
+      }
+      keyGridBuilder = Key('my_key_${DateTime.now().millisecondsSinceEpoch}');
     });
   }
 
@@ -70,39 +90,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomComponents.makeSimpleAppbar(context: context,title: 'Comprar', color: customPrimary,colorLeadingIcon: customBackground),
-      body: Container(
-        //height:MediaQuery.of(context).size.height*0.4,
-        //width:MediaQuery.of(context).size.width,
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            buildCheckoutProcessBar(),
-            const SizedBox(
-              height: 12,
-            ),
-            //row
-            Column(
-              //mainAxisSize: MainAxisSize.max,
-              children: [
-                if (currentScreenIndex == 0)
-                  SizedBox(
-                    height:  MediaQuery.of(context).size.height*0.65,
-                    child: DelivInfoSubscreen(changeScreen: changeScreen)),
-                if (currentScreenIndex == 1)
-                  PayInfoSubscreen(changeScreen: changeScreen),
-                if (currentScreenIndex == 2)
-                  ReviewCheckoutSubscreen(changeScreen: changeScreen),
-              ],
-            ),
-          ],
-        ),
+      body: ListView(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          buildCheckoutProcessBar(key: keyGridBuilder),
+          //row
+          Column(
+            //mainAxisSize: MainAxisSize.max,
+            children: [
+              if (currentScreenIndex == 0)                
+                SizedBox(
+                  height:  MediaQuery.of(context).size.height*0.7,
+                  child: DelivInfoSubscreen(changeScreen: changeScreen)),
+              if (currentScreenIndex == 1)
+                
+                SizedBox(
+                  height:  MediaQuery.of(context).size.height*0.7,
+                  child: PayInfoSubscreen(changeScreen: changeScreen)),
+              if (currentScreenIndex == 2)
+                SizedBox(
+                  height:  MediaQuery.of(context).size.height*0.7,
+                  child: ReviewCheckoutSubscreen(changeScreen: changeScreen)),
+            ],
+          ),
+        ],
       ),
       bottomNavigationBar: const MyBottomNavBar(),
     );
   }
 
-  Row buildCheckoutProcessBar() {
+  Row buildCheckoutProcessBar({required Key key}) {
     return Row(
+      key: key,
       children: [
         Container(
           height: 80,
@@ -122,8 +141,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  GestureDetector checkoutProcessIcons({required bool isActive, required String iconActive, required String iconInactive, required String label}) {
-    return GestureDetector(
+  SizedBox checkoutProcessIcons({required bool isActive, required String iconActive, required String iconInactive, required String label}) {
+    return SizedBox(
+      width: 70,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -135,7 +155,5 @@ class _CheckoutPageState extends State<CheckoutPage> {
         ],
       ),
     );
-  }
-
-  
+  }  
 }

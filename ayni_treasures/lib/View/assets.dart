@@ -22,3 +22,4 @@ const String deliveryBoxIconActive = 'assets/icons/DeliveryBoxActive.svg';
 const String reviewCheckoutIconActive ='assets/icons/ReviewCheckoutActive.svg';
 const String quickDeliveryIcon = 'assets/icons/QuickDelivery.svg';
 const String standardDeliveryIcon = 'assets/icons/StandardDelivery.svg';
+const String simpleCardIcon = 'assets/icons/SimpleCardIcon.svg';

@@ -108,6 +108,7 @@ flutter:
     - assets/icons/ReviewCheckoutActive.svg
     - assets/icons/QuickDelivery.svg
     - assets/icons/StandardDelivery.svg
+    - assets/icons/SimpleCardIcon.svg
 
   #   - images/a_dot_ham.jpeg
 

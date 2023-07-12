@@ -28,7 +28,7 @@ class DelivInfoSubscreen extends StatefulWidget {
 
 class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
   final TextAlign alignLabel = TextAlign.start;
-
+  //Valores por default
   final delivTypeValues = ['Estándar','Rápido'];
   final delivPriceValues = ['5.0','8.0'];
   //valores de los inputs
@@ -50,18 +50,24 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
     filter: {"#": RegExp(r'[0-9]')},
   );
 
+  //Mascaras de formateo de inputs
+  MaskTextInputFormatter maskFormatterTelNumber = MaskTextInputFormatter(
+    mask: '### ### ###',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
   //cardtile radiotiles tipo de envio
   int selectedDeliveryRadioTile = 1;
 
   final formKey = GlobalKey<FormState>();
 
-  //Registra y Construye el dialogo de inicio de sesión exitoso
+  //Registra y Construye el dialogo de carga de informacion de envio exitoso
   void submitDelivInfoForm({required BuildContext context, required String route}) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      //Se establece el usuario actual
-      //setCurrentUser();
-
+      //se envia el dato final del total
+      appData.totals['total']=generalTotal;
+      //Mostrar cuadro de dialogo
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -84,6 +90,7 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
                         content: 'Gracias por confiar en nosotros',
                         callbackFn: () {
                           setState(() {
+                            Navigator.of(context).pop();
                             widget.changeScreen(1);
                           });
                         },
@@ -144,6 +151,9 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
             //row
             Flexible(
               child: buildForm(context)),
+            const SizedBox(
+              height: 12,
+            ),
           ]),
         ),
       ),
@@ -236,7 +246,7 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
             FormItems.makeInputItem(
                 width: 150,
                 label: 'Codigo postal',
-                inputType: TextInputType.text,
+                inputType: TextInputType.number,
                 cbOnSaved: (String value) {
                   postalcodeValue = value;
                 },
@@ -246,10 +256,12 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
                   }
                 },
                 labelAlign: alignLabel,
-                inputFormatters: [maskFormatterPostalCode],                
+                inputFormatters: [maskFormatterPostalCode],
+                hintText: '00000',               
                 ),
             const SizedBox(width: 16),
             FormItems.makeInputItem(
+              inputFormatters: [maskFormatterTelNumber],
                 width: 182,
                 label: 'Número telefónico',
                 inputType: TextInputType.phone,
@@ -257,18 +269,16 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
                   telephoneValue = value;
                 },
                 cbValidator: (String value) {
-                  if (value.length > 9 || value.isEmpty) {
+                  if (value.length > 11 || value.isEmpty) {
                     return 'Máximo 9 números';
                   }
                 },
-                labelAlign: alignLabel),
+                labelAlign: alignLabel,
+                hintText: '000-000-000'
+                ),
           ],
         ),
-        Column(
-          children: [
-            CustomComponents.makeText(headingType: 'H6', data: 'Tipo de envío', color: customPrimary)
-          ],
-        ),
+        CustomComponents.makeText(headingType: 'H6', data: 'Tipo de envío', color: customPrimary),
         const SizedBox(height: 8,),
         buildDeliveryCardTile(indexCardTile: 1, delivType: 'Envío Estándar', delivTime: '1-2 días', delivPrice: 'S/. 5.00'),
         const SizedBox(height: 4,),
@@ -361,7 +371,6 @@ class _DelivInfoSubscreenState extends State<DelivInfoSubscreen> {
     final quantity = appData.totals['quantity'];
     final subtotal = appData.totals['subtotal'];
     final discounts = appData.totals['discounts'];
-    final generalTotal = appData.totals['total'];
 
     return Container(
       width:  MediaQuery.of(context).size.width,
